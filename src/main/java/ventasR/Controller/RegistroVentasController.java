@@ -1,2 +1,4 @@
-package ventasR.Controller;public class RegistroVentasController {
+package ventasR.Controller;
+
+public class RegistroVentasController {
 }

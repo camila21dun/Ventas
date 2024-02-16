@@ -32,11 +32,11 @@
         <Button fx:id="btnEliminarCliente" layoutX="294.0" layoutY="468.0" mnemonicParsing="false" onAction="#eliminarClienteEvent" style="-fx-background-color: #jjj000;" text="Eliminar" />
         <Button fx:id="btnActualizarCliente" layoutX="156.0" layoutY="468.0" mnemonicParsing="false" onAction="#actualizarClienteEvent" text="Actualizar" />
         <Button fx:id="btnVentas" layoutX="691.0" layoutY="539.0" mnemonicParsing="false" onAction="#ventasEvent" text="Ir a Ventas" />
-      <TableView layoutX="457.0" layoutY="126.0" prefHeight="289.0" prefWidth="220.0">
+      <TableView fx:id="tabClientesJuridicos" layoutX="457.0" layoutY="126.0" prefHeight="289.0" prefWidth="220.0">
         <columns>
-          <TableColumn prefWidth="75.0" text="Nombre" />
-          <TableColumn prefWidth="90.0" text="Identificacion" />
-            <TableColumn prefWidth="60.0" text="Nit" />
+          <TableColumn fx:id="columNombre" prefWidth="75.0" text="Nombre" />
+          <TableColumn fx:id="columId" prefWidth="90.0" text="Identificacion" />
+            <TableColumn fx:id="columNit" prefWidth="60.0" text="Nit" />
         </columns>
       </TableView>
       <Button fx:id="btnAtras" layoutX="19.0" layoutY="539.0" mnemonicParsing="false" onAction="#atrasEvent" text="Atras" />

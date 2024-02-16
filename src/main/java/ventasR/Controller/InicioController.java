@@ -8,7 +8,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 
-public class Inicio {
+public class InicioController {
 
     @FXML
     private ResourceBundle resources;
@@ -32,7 +32,8 @@ public class Inicio {
     }
 
     @FXML
-    void productosEfvent(ActionEvent event) {
+    void productosEfvent(ActionEvent event) throws IOException{
+            new ViewController(ventana, "/views/registroVentas.fxml");
 
     }
 
