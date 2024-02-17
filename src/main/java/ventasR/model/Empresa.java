@@ -17,15 +17,20 @@ import java.util.List;
 public class Empresa {
 
 
-    private ArrayList<Ventas> listaVentas;
+
     private ArrayList<ClienteJuridico> clientesJuridicos;
     private ArrayList<ClienteNatural> clientesNaturales;
+    private ArrayList<Perecedero> listaPerecederos;
+    private ArrayList<Refigerado> listaRefigerados;
+    private ArrayList<Envasado> listaEnvasados;
+
 
     private static Empresa empresa;
 
     public Empresa() {
         this.clientesNaturales = new ArrayList<>();
         this.clientesJuridicos = new ArrayList<>();
+
 
     }
 
@@ -210,6 +215,266 @@ public class Empresa {
             }
 
         }
+    public Perecedero registrarProductoPerecedero (String codigo,String nombre, String descripcion, double  valorUnitario, int cantidadExistente
+            ,LocalDate fechaVencimiento) throws AtributoVacioException {
+
+        if (descripcion == null || descripcion.isBlank()) {
+            throw new AtributoVacioException("La descripcion es obligatoria");
+        }
+        if (nombre == null || nombre.isBlank()) {
+            throw new AtributoVacioException("El nombre es obligatorio");
+        }
+        if (valorUnitario == 0) {
+            throw new AtributoVacioException("El valor es obligatorio");
+        }
+
+        if (fechaVencimiento == null ) {
+            throw new AtributoVacioException("ingrese fecha de vencimineto es obligatorio");
+        }
+
+
+        //Demás validaciones
+
+        Perecedero perecedero = Perecedero.builder()
+
+                .codigo(codigo)
+                .nombre(nombre)
+                .descripcion(descripcion)
+                .valorUnitario(valorUnitario)
+                .cantExistencia(cantidadExistente)
+                .fechaVencimiento(fechaVencimiento)
+
+                .build();
+
+        listaPerecederos.add(perecedero);
+
+        return perecedero;
+    }
+    public Perecedero obtenerProductoPerecedero (String codigo){
+        return listaPerecederos.stream().filter(c -> c.getCodigo().equals(codigo)).findFirst().orElse(null);
+    }
+    public void eliminarPerecedero (String codigo) throws ElementoNoEncontradoException {
+        Perecedero perecederoAEliminar = obtenerProductoPerecedero(codigo);
+        if (perecederoAEliminar != null) {
+            listaPerecederos.remove(perecederoAEliminar);
+        } else {
+            throw new ElementoNoEncontradoException("No se encontró un producto perecedero con el codigo proporcionado.");
+        }
+    }
+    public void actualizarProductoPerecedero (String codigo,String nombre, String descripcion, double  valorUnitario, int cantidadExistente
+            ,LocalDate fechaVencimiento) throws AtributoVacioException
+    {
+        if (descripcion == null || descripcion.isBlank()) {
+            throw new AtributoVacioException("La descripcion es obligatoria");
+        }
+        if (nombre == null || nombre.isBlank()) {
+            throw new AtributoVacioException("El nombre es obligatorio");
+        }
+        if (valorUnitario == 0) {
+            throw new AtributoVacioException("El valor es obligatorio");
+        }
+
+        if (fechaVencimiento == null ) {
+            throw new AtributoVacioException("ingrese fecha de vencimineto es obligatorio");
+        }
+
+        Perecedero perecedero = obtenerProductoPerecedero(codigo);
+        if (perecedero != null) {
+            perecedero.setNombre(nombre);
+            perecedero.setDescripcion(descripcion);
+            perecedero.setCodigo(codigo);
+            perecedero.setCantExistencia(cantidadExistente);
+            perecedero.setFechaVencimiento(fechaVencimiento);
+            perecedero.setValorUnitario(valorUnitario);
+        } else {
+            throw new AtributoVacioException("No existe el producto");
+        }
+
+    }
+    //Refigererado
+    public Refigerado registrarProductoRefigerado (String codigo,String nombre, String descripcion, double  valorUnitario, int cantidadExistente
+            ,String codigoAprovacion, int temperatura) throws AtributoVacioException {
+        if (codigo == null || codigo.isBlank()) {
+            throw new AtributoVacioException("La descripcion es obligatoria");
+        }
+
+        if (descripcion == null || descripcion.isBlank()) {
+            throw new AtributoVacioException("La descripcion es obligatoria");
+        }
+        if (nombre == null || nombre.isBlank()) {
+            throw new AtributoVacioException("El nombre es obligatorio");
+        }
+        if (valorUnitario == 0) {
+            throw new AtributoVacioException("El valor es obligatorio");
+        }
+        if (codigoAprovacion == null|| codigoAprovacion.isBlank() ) {
+            throw new AtributoVacioException("ingrese el codigo de aprovacion es obligatorio");
+        }
+        if (temperatura == 0) {
+            throw new AtributoVacioException("la temperatura es obligatorio");
+        }
+
+        //Demás validaciones
+
+        Refigerado refigerado = Refigerado.builder()
+
+                .codigo(codigo)
+                .nombre(nombre)
+                .descripcion(descripcion)
+                .valorUnitario(valorUnitario)
+                .cantExistencia(cantidadExistente)
+                .codigoAprovacion(codigoAprovacion)
+                .temperatura(temperatura)
+
+                .build();
+
+        listaRefigerados.add(refigerado);
+
+        return refigerado;
+    }
+    public Refigerado obtenerProductoRefigerado (String codigo){
+        return listaRefigerados.stream().filter(c -> c.getCodigo().equals(codigo)).findFirst().orElse(null);
+    }
+    public void eliminarRefigerado (String codigo) throws ElementoNoEncontradoException {
+        Refigerado refigeradoAEliminar = obtenerProductoRefigerado(codigo);
+        if (refigeradoAEliminar != null) {
+            listaPerecederos.remove(refigeradoAEliminar);
+        } else {
+            throw new ElementoNoEncontradoException("No se encontró un producto perecedero con el codigo proporcionado.");
+        }
+    }
+    public void actualizarProductoRefigerado (String codigo,String nombre, String descripcion, double  valorUnitario, int cantidadExistente
+            ,String codigoAprovacion, int temperatura) throws AtributoVacioException
+    {
+        if (codigo == null || codigo.isBlank()) {
+            throw new AtributoVacioException("La descripcion es obligatoria");
+        }
+        if (descripcion == null || descripcion.isBlank()) {
+            throw new AtributoVacioException("La descripcion es obligatoria");
+        }
+        if (nombre == null || nombre.isBlank()) {
+            throw new AtributoVacioException("El nombre es obligatorio");
+        }
+        if (valorUnitario == 0) {
+            throw new AtributoVacioException("El valor es obligatorio");
+        }
+        if (codigoAprovacion == null|| codigoAprovacion.isBlank() ) {
+            throw new AtributoVacioException("ingrese el codigo de aprovacion es obligatorio");
+        }
+        if (temperatura == 0) {
+            throw new AtributoVacioException("la temperatura es obligatorio");
+        }
+
+        Refigerado refigerado = obtenerProductoRefigerado(codigo);
+        if (refigerado != null) {
+            refigerado.setNombre(nombre);
+            refigerado.setDescripcion(descripcion);
+            refigerado.setCodigo(codigo);
+            refigerado.setCantExistencia(cantidadExistente);
+            refigerado.setCodigoAprovacion(codigoAprovacion);
+            refigerado.setValorUnitario(valorUnitario);
+            refigerado.setTemperatura(temperatura);
+        } else {
+            throw new AtributoVacioException("No existe el producto");
+        }
+
+    }
+    //Envasado
+
+    public Envasado registrarProductoEnvasado (String codigo,String nombre, String descripcion, double  valorUnitario, int cantidadExistente
+            ,LocalDate fechaEnvasado, double peso, Pais pais) throws AtributoVacioException {
+        if (codigo == null || codigo.isBlank()) {
+            throw new AtributoVacioException("La descripcion es obligatoria");
+        }
+
+        if (descripcion == null || descripcion.isBlank()) {
+            throw new AtributoVacioException("La descripcion es obligatoria");
+        }
+        if (nombre == null || nombre.isBlank()) {
+            throw new AtributoVacioException("El nombre es obligatorio");
+        }
+        if (valorUnitario == 0) {
+            throw new AtributoVacioException("El valor es obligatorio");
+        }
+
+        if (peso == 0) {
+            throw new AtributoVacioException("el peso es obligatorio");
+        }
+
+        if (pais == null) {
+            throw new AtributoVacioException("el pais es obligatorio");
+        }
+
+
+        //Demás validaciones
+
+        Envasado envasado = Envasado.builder()
+
+                .codigo(codigo)
+                .nombre(nombre)
+                .descripcion(descripcion)
+                .valorUnitario(valorUnitario)
+                .cantExistencia(cantidadExistente)
+                .fechaEnvasado(fechaEnvasado)
+                .peso(peso)
+                .pais(pais)
+
+                .build();
+
+        listaEnvasados.add(envasado);
+
+        return envasado;
+    }
+    public Envasado obtenerProductoEnvasado (String codigo){
+        return listaEnvasados.stream().filter(c -> c.getCodigo().equals(codigo)).findFirst().orElse(null);
+    }
+    public void eliminarEnvasado (String codigo) throws ElementoNoEncontradoException {
+        Envasado envasadoAEliminar = obtenerProductoEnvasado(codigo);
+        if (envasadoAEliminar != null) {
+            listaEnvasados.remove(envasadoAEliminar);
+        } else {
+            throw new ElementoNoEncontradoException("No se encontró un producto perecedero con el codigo proporcionado.");
+        }
+    }
+    public void actualizarProductoEnvasado (String codigo,String nombre, String descripcion, double  valorUnitario, int cantidadExistente
+            ,LocalDate fechaEnvasado, double peso, Pais pais) throws AtributoVacioException
+    {
+        if (codigo == null || codigo.isBlank()) {
+            throw new AtributoVacioException("La descripcion es obligatoria");
+        }
+        if (descripcion == null || descripcion.isBlank()) {
+            throw new AtributoVacioException("La descripcion es obligatoria");
+        }
+        if (nombre == null || nombre.isBlank()) {
+            throw new AtributoVacioException("El nombre es obligatorio");
+        }
+        if (valorUnitario == 0) {
+            throw new AtributoVacioException("El valor es obligatorio");
+        }
+        if (peso == 0) {
+            throw new AtributoVacioException("el peso es obligatorio");
+        }
+
+        if (pais == null) {
+            throw new AtributoVacioException("el pais es obligatorio");
+        }
+
+        Envasado envasado = obtenerProductoEnvasado(codigo);
+        if (envasado != null) {
+            envasado.setNombre(nombre);
+            envasado.setDescripcion(descripcion);
+            envasado.setCodigo(codigo);
+            envasado.setCantExistencia(cantidadExistente);
+            envasado.setFechaEnvasado(fechaEnvasado);
+            envasado.setValorUnitario(valorUnitario);
+            envasado.setPais(pais);
+            envasado.setPeso(peso);
+
+        } else {
+            throw new AtributoVacioException("No existe el producto");
+        }
+
+    }
 
     }
 
