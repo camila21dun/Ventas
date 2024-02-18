@@ -2,22 +2,37 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="780.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ventasR.Controller.RegistroVentasController">
+<AnchorPane fx:id="ventana" prefHeight="600.0" prefWidth="780.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ventasR.Controller.RegistroVentasController">
    <children>
-      <Label layoutX="259.0" layoutY="25.0" text="Registro Ventas" />
-      <Label layoutX="161.0" layoutY="76.0" text="Codigo:" />
-      <Label layoutX="159.0" layoutY="123.0" text="Nombre:" />
-      <Label layoutX="150.0" layoutY="172.0" text="Descripcion:" />
-      <Label layoutX="145.0" layoutY="216.0" text="Valor unitario:" />
-      <Label layoutX="121.0" layoutY="255.0" text="Cantidad en existencia:" />
-      <TextField layoutX="259.0" layoutY="72.0" />
-      <TextField layoutX="259.0" layoutY="119.0" />
-      <TextField layoutX="259.0" layoutY="168.0" />
-      <TextField layoutX="259.0" layoutY="212.0" />
-      <TextField layoutX="259.0" layoutY="251.0" />
+      <Label layoutX="272.0" layoutY="34.0" text="Registro de productos">
+         <font>
+            <Font size="24.0" />
+         </font></Label>
       <Button fx:id="btnAtras" layoutX="33.0" layoutY="543.0" mnemonicParsing="false" onAction="#atrasEvent" text="Atras" />
+      <Label layoutX="235.0" layoutY="172.0" text="Seleccione el tipo de producto que decea registrar">
+         <font>
+            <Font size="14.0" />
+         </font></Label>
+      <GridPane layoutX="179.0" layoutY="262.0" prefHeight="205.0" prefWidth="424.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="142.0" minWidth="10.0" prefWidth="142.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="141.0" minWidth="10.0" prefWidth="141.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Button fx:id="btnRefigerado" mnemonicParsing="false" onAction="#refigeradoEvent" prefHeight="64.0" prefWidth="137.0" text="Producto Refigerado" />
+            <Button fx:id="btnEnvasado" mnemonicParsing="false" onAction="#envasadoEvent" prefHeight="64.0" prefWidth="137.0" text="Producto Envasado" GridPane.columnIndex="1" />
+            <Button fx:id="btnPerecedero" mnemonicParsing="false" onAction="#perecederoEvent" prefHeight="64.0" prefWidth="137.0" text="Producto Perecedero" GridPane.columnIndex="2" />
+         </children>
+      </GridPane>
    </children>
 </AnchorPane>

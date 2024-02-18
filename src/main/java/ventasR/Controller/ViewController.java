@@ -14,8 +14,13 @@ public class ViewController {
     private Stage stage;
     private Scene scene;
     private Parent root;
-    public ViewController(AnchorPane currentAnchorPane, String fxml) throws IOException {
 
+    public ViewController(AnchorPane currentAnchorPane, String fxml) throws IOException {
+        initializeView(currentAnchorPane, fxml);
+    }
+
+
+    public void initializeView(AnchorPane currentAnchorPane, String fxml) throws IOException {
         AnchorPane nextAnchorPane = FXMLLoader.load(Objects.requireNonNull(App.class.getResource(fxml)));
         currentAnchorPane.getChildren().removeAll();
         currentAnchorPane.getChildren().setAll(nextAnchorPane);

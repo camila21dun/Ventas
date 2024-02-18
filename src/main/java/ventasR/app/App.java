@@ -13,7 +13,7 @@ public class App extends Application {
     public void start(Stage stage) throws Exception {
 
 
-        FXMLLoader loader = new FXMLLoader(App.class.getResource("/views/registroEnvasados.fxml/"));
+        FXMLLoader loader = new FXMLLoader(App.class.getResource("/views/inicio.fxml"));
 
         Parent parent = loader.load();
 

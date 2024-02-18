@@ -108,6 +108,8 @@ public class RegistroClienteNaturalController {
             txtEmail.clear();
             txtDireccion.clear();
             txtTelefono.clear();
+            dateFechaN.setValue(null);
+
 
             this.tabClientesNaturales.setItems(listaClienteNatural);
             actualizarTablaNaturales();
@@ -125,7 +127,7 @@ public class RegistroClienteNaturalController {
 
     @FXML
     void atrasEvent(ActionEvent event) throws IOException {
-        new ViewController(ventana, "/views/inicio.fxml");
+        new ViewController(ventana, "/views/registroCliente.fxml");
 
     }
     @FXML
@@ -142,6 +144,7 @@ public class RegistroClienteNaturalController {
                 txtEmail.clear();
                 txtDireccion.clear();
                 txtTelefono.clear();
+                dateFechaN.setValue(null);
                 actualizarTablaNaturales();
             } catch (ElementoNoEncontradoException e) {
                 // Manejar la excepción si el guía no se encuentra
@@ -207,9 +210,10 @@ public class RegistroClienteNaturalController {
 
         try {
             empresa.registrarClienteNatural(
-                    txtIdentificacion.getText(),
+
                     txtNombre.getText(),
                     txtApellido.getText(),
+                    txtIdentificacion.getText(),
                     txtDireccion.getText(),
                     txtTelefono.getText(),
                     txtEmail.getText(),
@@ -248,6 +252,7 @@ public class RegistroClienteNaturalController {
         txtEmail.setText("");
         txtDireccion.setText("");
         txtTelefono.setText("");
+        dateFechaN.setValue(null);
 
     }
 
@@ -279,8 +284,12 @@ public class RegistroClienteNaturalController {
     private void mostrarInformacion() {
         if(clienteNaturalSeleccionado!=null){
             txtNombre.setText(clienteNaturalSeleccionado.getNombre());
+            txtApellido.setText(clienteNaturalSeleccionado.getApellido());
             txtIdentificacion.setText(clienteNaturalSeleccionado.getIdentificacion());
+            txtTelefono.setText(clienteNaturalSeleccionado.getTelefono());
+            txtDireccion.setText(clienteNaturalSeleccionado.getDireccion());
             txtEmail.setText(clienteNaturalSeleccionado.getEmail());
+            dateFechaN.setValue(clienteNaturalSeleccionado.getFechaNacimiento());
         }
     }
 

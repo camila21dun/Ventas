@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import ventasR.exception.AtributoVacioException;
 import ventasR.exception.ElementoNoEncontradoException;
+import ventasR.exception.FechaInvalidaException;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -74,6 +75,7 @@ public class Empresa {
                 .apellido(apellido)
                 .direccion(direccion)
                 .telefono(telefono)
+                .nit(nit)
                 .build();
 
         clientesJuridicos.add(cliente);
@@ -90,7 +92,7 @@ public class Empresa {
         if (clienteAEliminar != null) {
             clientesJuridicos.remove(clienteAEliminar);
         } else {
-            throw new ElementoNoEncontradoException("No se encontró un guía con la identificación proporcionada.");
+            throw new ElementoNoEncontradoException("No se encontró un cliente con la identificación proporcionada.");
         }
     }
 
@@ -120,17 +122,18 @@ public class Empresa {
         if (clienteJuridico != null) {
             clienteJuridico.setNombre(nombre);
             clienteJuridico.setApellido(apellido);
+            clienteJuridico.setApellido(identificacion);
             clienteJuridico.setDireccion(direccion);
             clienteJuridico.setTelefono(telefono);
             clienteJuridico.setNit(nit);
         } else {
-            throw new AtributoVacioException("No existe el usuario");
+            throw new AtributoVacioException("No existe el cliente");
         }
     }
 
 
         public ClienteNatural registrarClienteNatural (String nombre, String apellido, String identificacion, String
-        direccion, String telefono, String email, LocalDate fechaNacimiento) throws AtributoVacioException {
+        direccion, String telefono, String email, LocalDate fechaNacimiento) throws AtributoVacioException, FechaInvalidaException {
 
             if (identificacion == null || identificacion.isBlank()) {
                 throw new AtributoVacioException("La identificacion es obligatoria");
@@ -149,6 +152,9 @@ public class Empresa {
 
             if (obtenerClienteNatural(identificacion) != null) {
                 throw new AtributoVacioException("La cédula " + identificacion + " ya está registrada");
+            }
+            if (fechaNacimiento == null || fechaNacimiento.isAfter(LocalDate.now())) {
+                throw new FechaInvalidaException("La fecha de nacimiento debe ser válida y anterior a la fecha actual");
             }
 
             //Demás validaciones
@@ -179,7 +185,7 @@ public class Empresa {
             if (clienteAEliminar != null) {
                 clientesNaturales.remove(clienteAEliminar);
             } else {
-                throw new ElementoNoEncontradoException("No se encontró un guía con la identificación proporcionada.");
+                throw new ElementoNoEncontradoException("No se encontró un cliente con la identificación proporcionada.");
             }
         }
 
@@ -213,12 +219,12 @@ public class Empresa {
                 clienteNatural.setEmail(email);
                 clienteNatural.setFechaNacimiento(fechaNacimiento);
             } else {
-                throw new AtributoVacioException("No existe el usuario");
+                throw new AtributoVacioException("No existe el cliente");
             }
 
         }
     public Perecedero registrarProductoPerecedero (String codigo,String nombre, String descripcion, double  valorUnitario, int cantidadExistente
-            ,LocalDate fechaVencimiento) throws AtributoVacioException {
+            ,LocalDate fechaVencimiento) throws AtributoVacioException, FechaInvalidaException {
 
         if (descripcion == null || descripcion.isBlank()) {
             throw new AtributoVacioException("La descripcion es obligatoria");
@@ -230,8 +236,8 @@ public class Empresa {
             throw new AtributoVacioException("El valor es obligatorio");
         }
 
-        if (fechaVencimiento == null ) {
-            throw new AtributoVacioException("ingrese fecha de vencimineto es obligatorio");
+        if (fechaVencimiento == null || fechaVencimiento.isBefore(LocalDate.now())) {
+            throw new FechaInvalidaException("La fecha de vencimiento debe ser válida y posterior a la fecha actual");
         }
 
 
@@ -337,14 +343,15 @@ public class Empresa {
     public Refigerado obtenerProductoRefigerado (String codigo){
         return listaRefigerados.stream().filter(c -> c.getCodigo().equals(codigo)).findFirst().orElse(null);
     }
-    public void eliminarRefigerado (String codigo) throws ElementoNoEncontradoException {
+    public void eliminarRefigerado(String codigo) throws ElementoNoEncontradoException {
         Refigerado refigeradoAEliminar = obtenerProductoRefigerado(codigo);
         if (refigeradoAEliminar != null) {
-            listaPerecederos.remove(refigeradoAEliminar);
+            listaRefigerados.remove(refigeradoAEliminar); // Corregir aquí
         } else {
-            throw new ElementoNoEncontradoException("No se encontró un producto perecedero con el codigo proporcionado.");
+            throw new ElementoNoEncontradoException("No se encontró un producto refigerado con el codigo proporcionado.");
         }
     }
+
     public void actualizarProductoRefigerado (String codigo,String nombre, String descripcion, double  valorUnitario, int cantidadExistente
             ,String codigoAprovacion, int temperatura) throws AtributoVacioException
     {
@@ -384,7 +391,7 @@ public class Empresa {
     //Envasado
 
     public Envasado registrarProductoEnvasado (String codigo,String nombre, String descripcion, double  valorUnitario, int cantidadExistente
-            ,LocalDate fechaEnvasado, double peso, Pais pais) throws AtributoVacioException {
+            ,LocalDate fechaEnvasado, double peso, Pais pais) throws AtributoVacioException, FechaInvalidaException {
         if (codigo == null || codigo.isBlank()) {
             throw new AtributoVacioException("La descripcion es obligatoria");
         }
@@ -405,6 +412,9 @@ public class Empresa {
 
         if (pais == null) {
             throw new AtributoVacioException("el pais es obligatorio");
+        }
+        if (fechaEnvasado == null || fechaEnvasado.isAfter(LocalDate.now())) {
+            throw new FechaInvalidaException("La fecha de envasado debe ser válida y anterior a la fecha actual");
         }
 
 

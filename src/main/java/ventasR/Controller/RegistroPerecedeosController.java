@@ -86,9 +86,10 @@ public class RegistroPerecedeosController {
     private final Empresa empresa = Empresa.getInstance();
 
     @FXML
-    void atrasEvent(ActionEvent event)throws IOException {
-        new ViewController(ventana, "/views/registroCliente.fxml");
+    void atrasEvent(ActionEvent event) throws IOException {
+        ViewController viewController = new ViewController(ventana, "/views/registroVentas.fxml");
     }
+
 
     @FXML
     void registrarPerecederosEvent(ActionEvent event) {

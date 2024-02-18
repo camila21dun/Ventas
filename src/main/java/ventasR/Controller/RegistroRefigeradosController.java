@@ -86,7 +86,7 @@ public class RegistroRefigeradosController {
 
     @FXML
     void atrasEvent(ActionEvent event)throws IOException {
-        new ViewController(ventana, "/views/registroCliente.fxml");
+        new ViewController(ventana, "/views/registroVentas.fxml");
     }
     @FXML
     void registrarRefigeradoEvent(ActionEvent event) {
@@ -143,6 +143,7 @@ public class RegistroRefigeradosController {
         txtValorUnitario.setText("");
         txtTemperatura.clear();
         txtCodigoAprobacion.clear();
+
     }
 
     private void mostrarAlerta(String mensaje) {
@@ -186,6 +187,7 @@ public class RegistroRefigeradosController {
             txtTemperatura.clear();
             txtCodigoAprobacion.clear();
 
+
             this.tabRefigerados.setItems(listaProductoRefigerado);
             actualizarTablaRefigerados();
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -199,13 +201,14 @@ public class RegistroRefigeradosController {
             alert.show();
         }
     }
-    private void actualizarTablaRefigerados()throws RutaInvalidaException {
-        listaProductoRefigerado = FXCollections.observableArrayList(empresa.getListaRefigerados());
-        tablaProductosRefigedados(); // Llama a esta función primero
-        tabRefigerados.getItems().clear();
-        tabRefigerados.setItems(listaProductoRefigerado);
+    private void actualizarTablaRefigerados() throws RutaInvalidaException {
+        listaProductoRefigerado.clear();
+        listaProductoRefigerado.addAll(empresa.getListaRefigerados());
         tabRefigerados.refresh();
     }
+
+
+
     void tablaProductosRefigedados() throws RutaInvalidaException {
         tabRefigerados.setItems(listaProductoRefigerado);
 
@@ -247,7 +250,9 @@ public class RegistroRefigeradosController {
         if (refigeradoSeleccionado != null) {
             try {
                 // Llamar al método de eliminación en la clase principal
-                Empresa.getInstance().eliminarPerecedero(refigeradoSeleccionado.getCodigo());
+                Empresa.getInstance().eliminarRefigerado(refigeradoSeleccionado.getCodigo());
+                listaProductoRefigerado.remove(refigeradoSeleccionado); // Actualizar la lista
+                actualizarTablaRefigerados();  // Mover la llamada aquí para actualizar antes de limpiar
                 txtNombre.clear();
                 txtCodigo.clear();
                 txtCantExistente.clear();
@@ -255,7 +260,6 @@ public class RegistroRefigeradosController {
                 txtValorUnitario.clear();
                 txtTemperatura.clear();
                 txtCodigoAprobacion.clear();
-                actualizarTablaRefigerados();
             } catch (ElementoNoEncontradoException e) {
                 // Manejar la excepción si el guía no se encuentra
                 Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -272,10 +276,14 @@ public class RegistroRefigeradosController {
     }
 
 
+
+
     @FXML
     void initialize() throws RutaInvalidaException {
         tablaProductosRefigedados();
+        tabRefigerados.setItems(listaProductoRefigerado);
         actualizarTablaRefigerados();
     }
+
 
 }

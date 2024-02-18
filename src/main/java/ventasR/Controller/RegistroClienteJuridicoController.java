@@ -52,6 +52,9 @@ public class RegistroClienteJuridicoController {
     private TableColumn<ClienteJuridico, String> columNit;
 
     @FXML
+    private TableColumn<ClienteJuridico, String> columTelefono;
+
+    @FXML
     private TableColumn<ClienteJuridico, String> columNombre;
 
     @FXML
@@ -105,6 +108,7 @@ public class RegistroClienteJuridicoController {
             txtApellido.clear();
             txtDireccion.clear();
             txtTelefono.clear();
+            txtNit.clear();
 
             this.tabClientesJuridicos.setItems(listaClienteJuridico);
             actualizarTablaJuridico();
@@ -121,7 +125,7 @@ public class RegistroClienteJuridicoController {
     }
     @FXML
     void atrasEvent(ActionEvent event) throws IOException {
-        new ViewController(ventana, "/views/inicio.fxml");
+        new ViewController(ventana, "/views/registroCliente.fxml");
 
     }
 
@@ -189,7 +193,7 @@ public class RegistroClienteJuridicoController {
             alert.show();
             limpiarTexto();
 
-            //   btnIrMenu.setDisable(false);
+
 
         } catch (Exception e) {
 
@@ -212,7 +216,9 @@ public class RegistroClienteJuridicoController {
     }
 
     @FXML
-    void ventasEvent(ActionEvent event) {
+    void ventasEvent(ActionEvent event) throws IOException {
+        new ViewController(ventana, "/views/registroCliente.fxml");
+
 
     }
 
@@ -247,7 +253,9 @@ public class RegistroClienteJuridicoController {
         // Personalizar las celdas de las columnas
         columNombre.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNombre()));
         columId.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getIdentificacion()));
+        columTelefono.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTelefono()));
         columNit.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNit()));
+
 
         // Asignar el manejador de selección
         tabClientesJuridicos.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
@@ -263,6 +271,9 @@ public class RegistroClienteJuridicoController {
         if(clienteJuridicoSeleccionado!=null){
             txtNombre.setText(clienteJuridicoSeleccionado.getNombre());
             txtIdentificacion.setText(clienteJuridicoSeleccionado.getIdentificacion());
+            txtDireccion.setText(clienteJuridicoSeleccionado.getDireccion());
+            txtApellido.setText(clienteJuridicoSeleccionado.getApellido());
+            txtTelefono.setText(clienteJuridicoSeleccionado.getTelefono());
             txtNit.setText(clienteJuridicoSeleccionado.getNit());
         }
     }

@@ -89,12 +89,22 @@ public class RegistroEnvasadosController {
     private TextField txtValorUnitario;
 
     @FXML
+    private Button btnDevolver;
+
+
+    @FXML
     private AnchorPane ventana;
     private final Empresa empresa = Empresa.getInstance();
 
     @FXML
-    void atrasEvent(ActionEvent event)throws IOException {
-        new ViewController(ventana, "/views/registroCliente.fxml");
+    void devolverEvent(ActionEvent event) throws IOException {
+        new ViewController(ventana, "/views/inicio.fxml");
+    }
+
+    @FXML
+    void atrasEvent(ActionEvent event) throws IOException {
+        new ViewController(ventana, "/views/registroVentas.fxml");
+
     }
     @FXML
     void registrarEnvasadoEvent(ActionEvent event) {
@@ -154,6 +164,8 @@ public class RegistroEnvasadosController {
         txtCantExistente.setText("");
         txtValorUnitario.setText("");
         txtPeso.setText("");
+        dateFechaEnvasado.setValue(null);
+        cbPais.setValue(null);
     }
     private void mostrarAlerta(String mensaje) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -184,8 +196,9 @@ public class RegistroEnvasadosController {
             int cantidadExistente = Integer.parseInt(txtCantExistente.getText());
             double peso = Double.parseDouble(txtPeso.getText());
             LocalDate fechaEnvasado= dateFechaEnvasado.getValue();
+            Pais pais = cbPais.getValue();
 
-         //   empresa.actualizarProductoEnvasado(codigo,nombre,descripcion,valorUnitario,cantidadExistente,fechaEnvasado,peso,pais);
+            empresa.actualizarProductoEnvasado(codigo,nombre,descripcion,valorUnitario,cantidadExistente,fechaEnvasado,peso,pais);
 
             // Limpia los campos después del registro
             txtNombre.clear();
@@ -194,6 +207,8 @@ public class RegistroEnvasadosController {
             txtValorUnitario.clear();
             txtCantExistente.clear();
             txtPeso.clear();
+            dateFechaEnvasado.setValue(null);
+            cbPais.setValue(null);
 
             this.tabEnvasados.setItems(listaProductoEnvasado);
             actualizarTablaEnvasados();
@@ -249,6 +264,7 @@ public class RegistroEnvasadosController {
             txtCantExistente.setText(String.valueOf(envasadoSeleccionado.getCantExistencia()));
             txtValorUnitario.setText(String.valueOf(envasadoSeleccionado.getValorUnitario()));
             txtPeso.setText(String.valueOf(envasadoSeleccionado.getPeso()));
+            dateFechaEnvasado.setValue(envasadoSeleccionado.getFechaEnvasado());
         }
     }
 
@@ -264,12 +280,16 @@ public class RegistroEnvasadosController {
         if (envasadoSeleccionado != null) {
             try {
                 // Llamar al método de eliminación en la clase principal
-                Empresa.getInstance().eliminarPerecedero(envasadoSeleccionado.getCodigo());
+                Empresa.getInstance().eliminarEnvasado(envasadoSeleccionado.getCodigo());
                 txtNombre.clear();
                 txtCodigo.clear();
                 txtCantExistente.clear();
                 txtDescripcion.clear();
                 txtValorUnitario.clear();
+                txtPeso.clear();
+                dateFechaEnvasado.setValue(null);
+                cbPais.setValue(null);
+
                 actualizarTablaEnvasados();
             } catch (ElementoNoEncontradoException e) {
                 // Manejar la excepción si el guía no se encuentra
@@ -289,13 +309,15 @@ public class RegistroEnvasadosController {
     void initialize() throws RutaInvalidaException {
         tablaProductosEnvasados();
         actualizarTablaEnvasados();
+        cbPais.setValue(null);
         cbPais.setItems(FXCollections.observableArrayList(Pais.values()));
-        cbPais.setPromptText("Seleccione un país");
         cbPais.setValue(Pais.COLOMBIA);
         cbPais.setValue(Pais.CHILE);
         cbPais.setValue(Pais.ARGENTINA);
         cbPais.setValue(Pais.ECUADOR);
         cbPais.setValue(Pais.PERU);
+        cbPais.setValue(null);
+
 
     }
 
