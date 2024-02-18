@@ -9,7 +9,6 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
 <AnchorPane prefHeight="600.0" prefWidth="780.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ventasR.Controller.RegistroEnvasadosController">
    <children>
       <Label layoutX="310.0" layoutY="25.0" text="Registro productos envasados" />
@@ -38,7 +37,7 @@
             <TableColumn fx:id="columPais" prefWidth="75.0" text="Pais" />
         </columns>
       </TableView>
-      <Label layoutX="105.0" layoutY="292.0" text="Peso:" />
+      <Label layoutX="95.0" layoutY="292.0" text="Peso (kg):" />
       <ComboBox fx:id="cbPais" layoutX="202.0" layoutY="327.0" prefWidth="150.0" />
       <Button fx:id="btnAtras" layoutX="39.0" layoutY="541.0" mnemonicParsing="false" onAction="#atrasEvent" text="Atras" />
    </children>

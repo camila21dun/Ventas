@@ -30,7 +30,9 @@ public class Empresa {
     public Empresa() {
         this.clientesNaturales = new ArrayList<>();
         this.clientesJuridicos = new ArrayList<>();
-
+        this.listaPerecederos = new ArrayList<>();
+        this.listaEnvasados = new ArrayList<>();
+        this.listaRefigerados = new ArrayList<>();
 
     }
 
